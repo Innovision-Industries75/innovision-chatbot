@@ -1,199 +1,361 @@
+
 import { useState } from "react";
 import "./App.css";
+import AdminDashboard from "./AdminDashboard";
 
 function App() {
-  const initialMessage = {
-    sender: "bot",
-    text: "Hello! 👋 Welcome to Innovision Industries. How can I help you today?",
-    time: getTime(),
-  };
+  const [message, setMessage] = useState("");
 
-  const [messages, setMessages] = useState([initialMessage]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      role: "bot",
+      text: "Hello! Welcome to Innovision Industries. How can I help you today?",
+    },
+  ]);
 
-  function getTime() {
-    return new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
+  const [loading, setLoading] = useState(false);
 
-  const sendMessage = async (messageText = input) => {
-  if (messageText.trim() === "" || isTyping) return;
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+  const [enquiryLoading, setEnquiryLoading] = useState(false);
+  const [enquiryStatus, setEnquiryStatus] = useState("");
 
-  const userMessage = {
-    sender: "user",
-    text: messageText,
-    time: getTime(),
-  };
+  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
 
-  setMessages((prev) => [...prev, userMessage]);
-  setInput("");
-  setIsTyping(true);
+  const sendMessage = async (event) => {
+    event.preventDefault();
 
-  try {
-    const response = await fetch("http://localhost:5000/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: messageText,
-      }),
-    });
+    const userMessage = message.trim();
 
-    const data = await response.json();
+    if (!userMessage || loading) return;
 
-    const botMessage = {
-      sender: "bot",
-      text: data.reply,
-      time: getTime(),
-    };
+    const history = messages
+      .slice(1)
+      .map((item) => ({
+        role: item.role === "bot" ? "assistant" : "user",
+        content: item.text,
+      }))
+      .slice(-10);
 
-    setMessages((prev) => [...prev, botMessage]);
-  } catch (error) {
-    console.error("Error communicating with backend:", error);
+    setMessages((previous) => [
+      ...previous,
+      { role: "user", text: userMessage },
+    ]);
 
-    const errorMessage = {
-      sender: "bot",
-      text: "Sorry, I couldn't connect to the server. Please try again.",
-      time: getTime(),
-    };
+    setMessage("");
+    setLoading(true);
 
-    setMessages((prev) => [...prev, errorMessage]);
-  } finally {
-    setIsTyping(false);
-  }
-};
+    try {
+      const response = await fetch("http://localhost:5000/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          history: history,
+        }),
+      });
 
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      sendMessage();
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to get a response.");
+      }
+
+      setMessages((previous) => [
+        ...previous,
+        { role: "bot", text: data.reply },
+      ]);
+    } catch (error) {
+      setMessages((previous) => [
+        ...previous,
+        {
+          role: "bot",
+          text: "Sorry, I couldn't connect to the AI service. Please try again.",
+        },
+      ]);
+
+      console.error("Chat error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const clearChat = () => {
-    setMessages([initialMessage]);
-    setIsTyping(false);
+  const submitEnquiry = async (event) => {
+    event.preventDefault();
+
+    if (enquiryLoading) return;
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const enquiry = {
+      customerName: formData.get("customerName").trim(),
+      companyName: formData.get("companyName").trim(),
+      email: formData.get("email").trim(),
+      phone: formData.get("phone").trim(),
+      product: formData.get("product"),
+      enquiryDetails: formData.get("enquiryDetails").trim(),
+    };
+
+    setEnquiryLoading(true);
+    setEnquiryStatus("");
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/enquiries",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(enquiry),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "Unable to submit your enquiry."
+        );
+      }
+
+      setEnquiryStatus(
+        `Success! Your enquiry has been submitted. Reference ID: ${data.enquiryId}`
+      );
+
+      form.reset();
+    } catch (error) {
+      setEnquiryStatus(
+        error.message ||
+          "Unable to submit your enquiry. Please try again."
+      );
+    } finally {
+      setEnquiryLoading(false);
+    }
   };
 
+  // Display the admin dashboard instead of the chatbot when selected.
+  if (showAdminDashboard) {
+    return (
+      <AdminDashboard
+        onBack={() => setShowAdminDashboard(false)}
+      />
+    );
+  }
+
+  // Main chatbot interface.
   return (
-    <div className="chatbot-container">
-      <div className="chatbot">
+    <div className="app">
+      <header className="chat-header">
+        <div className="company-icon">I</div>
 
-        {/* Header */}
-        <div className="chat-header">
-          <div className="company-info">
-            <div className="company-icon">I</div>
-
-            <div>
-              <h2>Innovision Industries</h2>
-              <p>AI Manufacturing Assistant</p>
-            </div>
-          </div>
-
-          <div className="header-actions">
-            <div className="status">
-              <span></span>
-              Online
-            </div>
-
-            <button className="clear-button" onClick={clearChat}>
-              Clear
-            </button>
-          </div>
+        <div>
+          <h1>Innovision Industries</h1>
+          <p>AI Customer Support Assistant</p>
         </div>
 
-        {/* Messages */}
-        <div className="chat-messages">
+        <div className="header-actions">
+          <button
+            type="button"
+            className="header-enquiry-button"
+            onClick={() => {
+              setEnquiryStatus("");
+              setShowEnquiryForm(true);
+            }}
+          >
+            Submit an Enquiry
+          </button>
 
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`message ${
-                message.sender === "user"
-                  ? "user-message"
-                  : "bot-message"
-              }`}
-            >
-              {message.sender === "bot" && (
-                <div className="bot-icon">🤖</div>
-              )}
-
-              <div>
-                <div className="message-content">
-                  {message.text}
-                </div>
-
-                <div className="message-time">
-                  {message.time}
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Typing indicator */}
-          {isTyping && (
-            <div className="message bot-message">
-              <div className="bot-icon">🤖</div>
-
-              <div className="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-          )}
-
-          {/* Suggested questions */}
-          {messages.length === 1 && !isTyping && (
-            <div className="suggestions">
-              <p>Try asking:</p>
-
-              <button
-                onClick={() =>
-                  sendMessage("What products do you manufacture?")
-                }
-              >
-                What products do you manufacture?
-              </button>
-
-              <button
-                onClick={() =>
-                  sendMessage("What manufacturing services do you provide?")
-                }
-              >
-                What manufacturing services do you provide?
-              </button>
-
-              <button
-                onClick={() =>
-                  sendMessage("I want to make an enquiry")
-                }
-              >
-                I want to make an enquiry
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Input */}
-        <div className="chat-input-area">
-          <input
-            type="text"
-            placeholder="Ask about our products or services..."
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={handleKeyPress}
-          />
-
-          <button onClick={() => sendMessage()}>
-            Send
+          <button
+            type="button"
+            className="header-enquiry-button"
+            onClick={() => setShowAdminDashboard(true)}
+          >
+            Admin Dashboard
           </button>
         </div>
+      </header>
 
-      </div>
+      <main className="chat-container">
+        <div className="welcome">
+          <h2>How can we help you?</h2>
+          <p>Ask us a question to get started.</p>
+        </div>
+
+        {showEnquiryForm ? (
+          <form
+            className="enquiry-form"
+            onSubmit={submitEnquiry}
+          >
+            <h2>Submit an Enquiry</h2>
+            <p>
+              Share your requirements with Innovision Industries.
+            </p>
+
+            <label htmlFor="customerName">Full Name *</label>
+            <input
+              id="customerName"
+              name="customerName"
+              type="text"
+              placeholder="Enter your full name"
+              maxLength={100}
+              required
+            />
+
+            <label htmlFor="companyName">Company Name *</label>
+            <input
+              id="companyName"
+              name="companyName"
+              type="text"
+              placeholder="Enter your company name"
+              maxLength={150}
+              required
+            />
+
+            <label htmlFor="email">Email Address *</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              maxLength={254}
+              required
+            />
+
+            <label htmlFor="phone">Phone Number *</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="Enter your phone number"
+              maxLength={25}
+              required
+            />
+
+            <label htmlFor="product">Product / Service *</label>
+            <select
+              id="product"
+              name="product"
+              required
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Select a product or service
+              </option>
+              <option value="Roof Rails and Roof Carriers">
+                Roof Rails and Roof Carriers
+              </option>
+              <option value="Precision Machining">
+                Precision Machining
+              </option>
+              <option value="Jigs, Fixtures and Gauges">
+                Jigs, Fixtures and Gauges
+              </option>
+              <option value="Press Tools and Dies">
+                Press Tools and Dies
+              </option>
+              <option value="Industrial Automation">
+                Industrial Automation
+              </option>
+              <option value="Sheet Metal Fabrication">
+                Sheet Metal Fabrication
+              </option>
+              <option value="Other">Other</option>
+            </select>
+
+            <label htmlFor="enquiryDetails">
+              Enquiry Details *
+            </label>
+            <textarea
+              id="enquiryDetails"
+              name="enquiryDetails"
+              placeholder="Describe your requirements..."
+              rows="4"
+              maxLength={3000}
+              required
+            />
+
+            {enquiryStatus && (
+              <p role="status" aria-live="polite">
+                {enquiryStatus}
+              </p>
+            )}
+
+            <div className="enquiry-buttons">
+              <button
+                type="submit"
+                disabled={enquiryLoading}
+              >
+                {enquiryLoading
+                  ? "Submitting..."
+                  : "Submit Enquiry"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowEnquiryForm(false)}
+              >
+                Back to Chat
+              </button>
+            </div>
+          </form>
+        ) : (
+          <>
+            <div className="messages" aria-live="polite">
+              {messages.map((item, index) => (
+                <div
+                  key={index}
+                  className={`message-row ${
+                    item.role === "user" ? "user-row" : ""
+                  }`}
+                >
+                  {item.role === "bot" && (
+                    <div className="bot-avatar">I</div>
+                  )}
+
+                  <div className={`message ${item.role}`}>
+                    {item.text}
+                  </div>
+                </div>
+              ))}
+
+              {loading && (
+                <div className="message-row">
+                  <div className="bot-avatar">I</div>
+                  <div className="message bot typing">
+                    AI is thinking...
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <form
+              className="chat-form"
+              onSubmit={sendMessage}
+            >
+              <input
+                type="text"
+                value={message}
+                onChange={(event) =>
+                  setMessage(event.target.value)
+                }
+                placeholder="Type your message..."
+                aria-label="Your message"
+                disabled={loading}
+              />
+
+              <button
+                type="submit"
+                disabled={loading || !message.trim()}
+              >
+                {loading ? "Thinking..." : "Send"}
+              </button>
+            </form>
+          </>
+        )}
+      </main>
     </div>
   );
 }

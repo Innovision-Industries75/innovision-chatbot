@@ -1,0 +1,153 @@
+INNOVISION INDUSTRIES — COMPANY KNOWLEDGE BASE
+Source: Company presentation supplied by the user (66 pages).
+Note: This knowledge base only includes information stated in the presentation text. For details that are not specified here, the chatbot should say the information is not available in its current knowledge base rather than guessing.
+
+1. COMPANY OVERVIEW
+Company name: Innovision Industries.
+Address: Gat No. 90, G-688, Jyotibanagar, Talawade MIDC, Pune – 411062, Maharashtra, India.
+Email: innovisionindustries7575@gmail.com
+Phone numbers: +91 9607437575; +91 9960390728.
+
+The presentation states that the company has more than 9 years of design and manufacturing experience. It describes a team of production and mechanical engineers and support staff with skills in quality control, project management, and design. The presentation mentions CATIA V5 and SolidWorks software solutions.
+
+The presentation describes quality as a major priority and uses the phrase “FIRST TIME RIGHT.”
+
+2. SERVICES
+The presentation lists these services:
+- Industrial automation.
+- Automation of automobile assembly workstations and assembly lines.
+- Upgrading control panels from contactor logic to PLC logic.
+- Design and development of Special Purpose Machines (SPMs).
+- Design and development of jigs, fixtures, dies, and moulds.
+- CNC bending components.
+- Roof rails, side foot steps, and roof carriage components.
+- Sheet metal fabrication work.
+- Machining of automotive and engineering components.
+- Tool-room work, gauges, checking jigs, and stamping tools are also described in the presentation's overview of associated engineering units.
+
+3. PRODUCTS AND ENGINEERING WORK
+The presentation shows or names the following product and work categories:
+- Roof rails.
+- Roof carriers / roof carriage components.
+- Side foot steps.
+- CNC bending and rolling components.
+- Precision machining components.
+- Mounting plates.
+- Welded assemblies.
+- Deep-drawn parts.
+- Checking fixtures and gauges.
+- Casting dies and inspection fixtures.
+- Plastic moulding components.
+- Fabrication components.
+- Cooling fixtures.
+- Poka-yoke system for an SPM AutoComp system.
+- Automatic breathe profile generator for CIPLA with Sankul Design.
+- Leak testing machine for SPM Auto.
+
+4. NAMED PRODUCT EXAMPLES
+The presentation includes these examples:
+- Roof carrier for Suzuki Grand Vitara and Toyota Hyryder. It lists 7 extrusion parts and material specification AL-6063 T6.
+- Tata Nexon X104 roof rail. Material specification: AL-6063 T6.
+- Tata Safari Q502 roof rail. Material specification: AL-6063 T6.
+- Roof rail for Skoda Kushaq and VW Taigun. Material specification: AL-6063 T6.
+- MG Astor roof rail. Material specification: AL-6063 T6.
+- Magnetic latch for Tata Altroz, Tata Nexon, and Tata Punch.
+- Roof rail machining SPM designed and developed for X104 (Tata Nexon).
+- Cooling fixtures for TACO.
+- Checking fixture and gauges for Piaggio.
+
+5. ROOF RAIL DEVELOPMENT
+For X104 roof rail development, the presentation lists:
+- Extrusion tool development.
+- Bending tool development.
+- Heat-treatment facility for roof rail.
+- Machining SPM development.
+- Buffing facility for roof rail.
+- Inspection of roof rail.
+It also shows machining tool development, assembly of the roof rail machining SPM, buffing, and inspection-fixture work.
+
+6. MACHINERY AND FACILITIES
+The presentation lists the following machinery in its machining section:
+- Double spindle CNC machines: 3.
+- Single spindle CNC machine: 1.
+- Milling machine: 1.
+- Drilling machines: 2.
+- Bench grinder: 1.
+- Turret lathe: 1.
+- Micro mill M1TR: 1.
+- VMC machines: 2.
+- Pneumatic power press, 300 ton: 1.
+- Hydraulic press, 300 ton: 1.
+- Hydraulic press, 75 ton: 1.
+- Hydraulic press, 100 ton: 1.
+
+The CNC bending and rolling workshop machinery list includes:
+- Three-axis CNC bending machine: 1.
+- Bending SPMs: 3.
+- Manual bending machine: 1.
+
+The presentation also mentions:
+- Spot welding machines, 50 KVA.
+- Aluminium extrusion press machines of 900 tons and 1800 tons.
+- CNC bending machine listed as 3000 x 100T.
+- CO2 welding machines: 400A and 300A models.
+- Arc welding machine: 200A.
+- Pillar-type drilling machine: 32 mm.
+- Compressor: 2 HP.
+- Cutting machine: 350 mm, 2 HP.
+- Gas cutting plant.
+Some machine details may relate to specific workshops or sections in the presentation; do not assume every machine is available for every job.
+
+7. MANUFACTURING PROCESS
+The process-flow diagram in the presentation shows these stages:
+1. Customer requirement.
+2. Raw-material purchase.
+3. Inward inspection against purchase order.
+4. Operations, including cutting, drilling, machining, and welding.
+5. In-process inspection.
+6. Assembly.
+7. Surface treatment.
+8. Final inspection.
+9. Dispatch.
+
+8. COMPANY VALUES
+Customer focus: The presentation says the company develops relationships that make a positive difference in customers' lives.
+Integrity: The presentation says it provides outstanding products and upholds standards of integrity in its actions.
+Teamwork: The presentation emphasizes working together across boundaries to meet customer needs and help the company succeed.
+Respect for people: The presentation says it values people, encourages their development, and rewards performance.
+
+9. MISSION
+“Be the one stop solution of our customers, employees, suppliers & society.”
+
+10. VISION
+“The preferred choice for customers in delivering excellence and value in design and engineering solutions. With the help of continuous improvement and modification of our production and services become unbeatable. Delivering exciting innovations.”
+
+11. STRENGTHS
+The presentation states:
+- Location: next to Jyotiba Mandir, Talawade.
+- Infrastructure: 10,000 sq. ft. area, with 5,000 sq. ft. for new product development.
+- Workforce: technically strong team with 18 to 20 years of design, manufacturing, and assembly experience.
+
+12. ACHIEVEMENT
+The presentation mentions a patent titled “Unidirectional Power Transmission Coupling for Automobiles to Increase Fuel Efficiency.”
+
+13. ORGANISATION INFORMATION
+The organisation chart names:
+- Mr. Nivas Dhere — Director, Business Development & NPI.
+- Mr. Sachin Hardikar — Director, HR & Finance.
+- Mr. Akashay Kolhe — Design & Development.
+- Mr. Pankaj Gajare — Purchase & Stores.
+- Mr. Omveer Singh — Production.
+- Mr. Sanket Kadam — Quality.
+- Mr. Mradul Yadav — Dispatch & Logistics.
+
+14. QUALITY AND CUSTOMER SUPPORT GUIDANCE FOR THE CHATBOT
+- Answer using only the company information available in this knowledge base.
+- Do not invent prices, quotations, product dimensions, delivery dates, certifications, customer contracts, or technical specifications not listed here.
+- If asked for a quotation or a product-specific engineering recommendation, explain that the company needs to confirm the details.
+- If a question cannot be answered from the available information, say: “I don’t have that information in the current company knowledge base. Please contact Innovision Industries for confirmation.”
+- For contact enquiries, provide the phone numbers and email listed in this knowledge base.
+- Keep responses professional, concise, and helpful.
+
+15. INFORMATION NOT ESTABLISHED BY THIS TEXT
+The presentation includes image-heavy pages and some sections whose details may be present only in images. This text file does not attempt to infer information from unclear images. Do not guess unlisted clients, current prices, stock availability, certifications, operating hours, payment terms, or delivery timelines.
